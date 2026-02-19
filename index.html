@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="images/me.png">
+<meta name="theme-color" content="#1A1A1A">
+
+  <title>Uthman Idrees – UI/UX Designer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar-custom">
+  <div style="display:flex;align-items:center;justify-content:space-between;max-width:1200px;margin:0 auto;width:100%">
+    <a href="#home" class="navbar-brand-custom">
+      <div class="brand-icon">U</div>
+      Uthman Idrees
+    </a>
+    <div class="nav-links">
+      <a href="#home" class="active">Home</a>
+      <a href="#services">Services</a>
+      <a href="#about">About Me</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact Me</a>
+      <a href="#" class="btn-get-in-touch" onclick="openContactModal();return false;">Get in touch</a>
+      <button class="dark-toggle" id="darkToggle" title="Toggle dark mode"><i class="fa fa-moon"></i></button>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="dark-toggle" id="darkToggleMobile" style="display:none" title="Toggle dark mode"><i class="fa fa-moon"></i></button>
+      <button class="hamburger" id="hamburger"><i class="fa fa-bars"></i></button>
+    </div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#home" onclick="closeMobile()">Home</a>
+  <a href="#services" onclick="closeMobile()">Services</a>
+  <a href="#about" onclick="closeMobile()">About Me</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#contact" onclick="closeMobile()">Contact Me</a>
+  <a href="#" onclick="openContactModal();closeMobile();return false;" style="color:var(--orange);font-weight:700;">Get in touch</a>
+</div>
+
+<!-- HERO -->
+<section id="home">
+  <div style="max-width:1200px;margin:0 auto;width:100%">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-7 hero-content fade-in">
+        <p class="hero-hello">Hello</p>
+        <h1 class="hero-name">I'm <span>Uthman Idrees</span></h1>
+        <p class="hero-roles">
+          <span class="typed-text" id="typedText"></span><span class="cursor"></span>
+        </p>
+        <div class="hero-btns">
+          <button class="btn-orange" onclick="openContactModal()">Hire Me!</button>
+          <a href="#projects" class="btn-outline-orange">View Projects</a>
+        </div>
+      </div>
+      <div class="col-lg-5 hero-img-wrap fade-in fade-delay-2">
+        <div class="hero-img-ring">
+          <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#ff8c35,#ff6b00,#cc4400);display:flex;align-items:center;justify-content:center;font-size:3rem;color:rgba(255,255,255,0.3)">
+           <img src="images/me.png">
+          </div>
+        </div>
+        <div class="hero-img-badge">✦ Available for Work</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="row align-items-center mb-2">
+      <div class="col-md-6 fade-in">
+        <div class="section-tag">What I Do</div>
+        <h2 class="section-title" style="color:#fff">My <span style="color:var(--orange)">Service</span></h2>
+      </div>
+      <div class="col-md-6 fade-in fade-delay-1">
+        <p style="color:#aaa;font-size:0.9rem;line-height:1.7">UI/UX Designer Crafting Clean, Functional & User-Focused Interfaces</p>
+      </div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <div class="service-img" style="position:relative">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#333);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--orange)">
+            <img src="images/uiux.png">
+          </div>
+          <div class="service-check"><i class="fa fa-check"></i></div>
+        </div>
+        <div class="service-name">Ui/UX Design</div>
+      </div>
+      <div class="service-card fade-in fade-delay-1">
+        <div class="service-img" style="position:relative">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#333);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--orange)"><img src="images/web.png"></div>
+          <div class="service-check"><i class="fa fa-check"></i></div>
+        </div>
+        <div class="service-name">Web Design</div>
+      </div>
+      <div class="service-card fade-in fade-delay-2">
+        <div class="service-img" style="position:relative">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#333);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--orange)"><img src="images/landing.png"></div>
+          <div class="service-check"><i class="fa fa-check"></i></div>
+        </div>
+        <div class="service-name">Landing Page</div>
+      </div>
+      <div class="service-card fade-in fade-delay-3">
+        <div class="service-img" style="position:relative">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a1a,#333);display:flex;align-items:center;justify-content:center;font-size:2rem;color:var(--orange)"><img src="images/graphics.png"></div>
+          <div class="service-check"><i class="fa fa-check"></i></div>
+        </div>
+        <div class="service-name">Graphic Design</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="row align-items-center gy-5">
+      <div class="col-lg-6 fade-in">
+        <div class="section-tag">Who I Am</div>
+        <h2 class="section-title">About <span style="color:var(--orange)">Me</span></h2>
+        <p style="color:var(--orange);font-style:italic;margin-bottom:20px;font-size:0.95rem">My Fingerprint on your Projects never fades</p>
+        <p class="about-text">A passionate UI/UX, Product designer, Graphic Designer, based in Ilorin, Kwara State. I specialize in designing responsive websites and mobile interfaces that are clean, intuitive, and user-friendly to solve real problems and create smooth user experiences.</p>
+        <div class="stars mt-3"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i></div>
+        <button class="btn-orange" onclick="openContactModal()">Hire Me!</button>
+        <div class="stats-row mt-4">
+          <div class="stat-item">
+            <div class="stat-number" data-count="2">0</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="95">0</div>
+            <div class="stat-label">Client Served</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-count="70" data-suffix="%">0</div>
+            <div class="stat-label">Success Rate</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 fade-in fade-delay-2">
+        <div class="about-img">
+          <div class="about-img-placeholder">
+<img src="images/me2.png">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="fade-in">
+      <div class="section-tag">Career</div>
+      <h2 class="section-title">My Work <span style="color:var(--orange)">Experience</span></h2>
+    </div>
+    <div class="exp-grid mt-4">
+      <div class="exp-card fade-in">
+        <div class="exp-arrow" style="display:inline-block">▶</div>
+        <div class="exp-company">Akot Print Design Hub</div>
+        <div class="exp-role">Graphic Designer</div>
+        <div class="exp-year">2021 – 2022</div>
+      </div>
+      <div class="exp-card fade-in fade-delay-1">
+        <div class="exp-arrow" style="display:inline-block">▶</div>
+        <div class="exp-company">Musty Grafix Design</div>
+        <div class="exp-role">Graphic Designer</div>
+        <div class="exp-year">2023 – 2024</div>
+      </div>
+      <div class="exp-card fade-in fade-delay-2">
+        <div class="exp-arrow" style="display:inline-block">▶</div>
+        <div class="exp-company">Ogunjobi Tech Hub</div>
+        <div class="exp-role" style="color:var(--orange)">UI/UX Designer</div>
+        <div class="exp-year">2024 – Present</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="text-center fade-in mb-2">
+      <div class="section-tag">Portfolio</div>
+      <h2 class="section-title">My Projects <span style="color:var(--orange)">Previews</span></h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card fade-in" onclick="openProjectModal(0)">
+        <div class="project-img">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#0d9488,#0f766e);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:rgba(255,255,255,0.5)"><img src="images/dashboard.png"></div>
+          <div class="project-overlay"><i class="fa fa-eye"></i></div>
+        </div>
+        <div class="project-info">
+          <div class="project-title">Consulting Web Dashboard</div>
+          <div class="project-type">UI/UX Design • Web App</div>
+        </div>
+      </div>
+      <div class="project-card fade-in fade-delay-1" onclick="openProjectModal(1)">
+        <div class="project-img">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#6366f1,#4f46e5);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:rgba(255,255,255,0.5)"><img src="images/mobile.png"></div>
+          <div class="project-overlay"><i class="fa fa-eye"></i></div>
+        </div>
+        <div class="project-info">
+          <div class="project-title">Huthride Mobile App</div>
+          <div class="project-type">Mobile UI/UX Design</div>
+        </div>
+      </div>
+      <div class="project-card fade-in fade-delay-2" onclick="openProjectModal(2)">
+        <div class="project-img">
+          <div style="width:100%;height:100%;background:linear-gradient(135deg,#0ea5e9,#0284c7);display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:rgba(255,255,255,0.5)"><img src="images/landing2.png"></div>
+          <div class="project-overlay"><i class="fa fa-eye"></i></div>
+        </div>
+        <div class="project-info">
+          <div class="project-title">Consulting Landing Page</div>
+          <div class="project-type">Landing Page Design</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY HIRE + TOOLS -->
+<section id="why">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="row gy-5 align-items-start">
+      <div class="col-lg-5 fade-in">
+        <div class="section-tag">Why Choose Me</div>
+        <h2 class="section-title">Why <span style="color:var(--orange)">Hire Me</span></h2>
+        <div class="why-card mt-4">
+          <h3>Why Hire Me</h3>
+          <p>I combine creativity and strategy to design digital experiences that are simple, functional, and impactful. When you hire me, you're not just getting a designer — you're getting a problem solver committed to delivering quality work.</p>
+        </div>
+      </div>
+      <div class="col-lg-7 fade-in fade-delay-1" id="tools">
+        <div class="section-tag">Tools I Use</div>
+        <h2 class="section-title">Daily Life <span style="color:var(--orange)">Tools</span></h2>
+        <div class="tools-grid mt-4">
+          <div class="tool-item">
+            <div class="tool-logo" style="background:linear-gradient(135deg,#1c1c1c,#333);display:flex;align-items:center;justify-content:center;border-radius:20px;">
+              <svg width="45" height="45" viewBox="0 0 38 57" fill="none"><path d="M19 28.5C19 23.8 22.9 20 27.5 20S36 23.9 36 28.5 32.1 37 27.5 37H19v-8.5z" fill="#FF7262"/><path d="M19 10C19 5.4 22.9 1.5 27.5 1.5S36 5.4 36 10s-3.9 8.5-8.5 8.5H19V10z" fill="#FF9A62"/><path d="M2 10C2 5.4 5.9 1.5 10.5 1.5H19V18.5H10.5C5.9 18.5 2 14.6 2 10z" fill="#F24E1E"/><path d="M2 28.5C2 33.1 5.9 37 10.5 37H19v-8.5H10.5C5.9 28.5 2 24.6 2 28.5z" fill="#A259FF"/><path d="M2 47C2 51.6 5.9 55.5 10.5 55.5S19 51.6 19 47V38.5H10.5C5.9 38.5 2 42.4 2 47z" fill="#0ACF83"/></svg>
+            </div>
+            <div class="tool-name">Figma</div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-logo" style="background:linear-gradient(135deg,#1a3a1a,#2d5a2d);display:flex;align-items:center;justify-content:center;border-radius:20px;">
+              <svg width="45" height="45" viewBox="0 0 100 100"><ellipse cx="50" cy="50" rx="45" ry="45" fill="#00B140"/><path d="M68 32c-5-3-11-4-18-2-5 1-9 4-12 8-2 3-3 7-2 11 1 5 4 9 8 11 3 2 7 3 11 2l2-1-2-4c-2 0-4 0-6-1-3-2-5-5-5-8-1-3 0-6 2-9 2-3 5-5 9-6 5-1 10 0 14 3l-1 3h6l2-11-8 4z" fill="#fff"/></svg>
+            </div>
+            <div class="tool-name">CorelDraw</div>
+          </div>
+          <div class="tool-item">
+            <div class="tool-logo" style="background:linear-gradient(135deg,#001e3c,#003a6c);display:flex;align-items:center;justify-content:center;border-radius:20px;">
+              <svg width="45" height="45" viewBox="0 0 100 100"><rect x="5" y="5" width="90" height="90" rx="16" fill="#001e3c"/><text x="50" y="68" text-anchor="middle" font-size="52" font-weight="bold" fill="#31A8FF" font-family="Arial">Ps</text></svg>
+            </div>
+            <div class="tool-name">Photoshop</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="row align-items-center gy-4">
+      <div class="col-lg-6 fade-in">
+        <h2>Do you have Project Idea? Let's discuss your project!</h2>
+        <p>Have a vision in mind? Whether it's a web design, mobile app UI, or a complete branding package — let's bring it to life together.</p>
+      </div>
+      <div class="col-lg-6 fade-in fade-delay-1 text-lg-end">
+        <button class="btn-orange" style="font-size:1.05rem;padding:15px 40px;" onclick="openContactModal()">Hire Me</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="row gy-5">
+      <div class="col-lg-4">
+        <div class="footer-brand">✦ Uthman Idrees</div>
+        <p class="footer-desc">UI/UX Designer crafting clean, functional, and user-focused digital experiences based in Ilorin, Kwara State.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/huthmangrfzdz_03?igsh=MTlocWF0aGxjYWt1ag==" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/iuthman091" target="_blank" class="social-link"><i class="fab fa-twitter"></i></a>
+          <a href="https://dribbble.com/idrees-uthman" target="_blank" class="social-link"><i class="fab fa-dribbble"></i></a>
+        </div>
+      </div>
+      <div class="col-lg-2 col-6">
+        <div class="footer-heading">Navigation</div>
+        <ul class="footer-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#services">Service</a></li>
+          <li><a href="#about">About Me</a></li>
+          <li><a href="#projects">My Projects</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-4 col-6">
+        <div class="footer-heading">Contacts</div>
+        <div class="footer-contact-item"><i class="fab fa-whatsapp"></i><a href="https://wa.me/+2349153458580">WhatsApp: +234 9153458580</a></div>
+        <div class="footer-contact-item"><i class="fa fa-phone"></i><a href="tel:+2349023235460">Phone: +234 9023235460</a></div>
+        <div class="footer-contact-item"><i class="fa fa-envelope"></i><a href="mailto:idreesuthman3@gmail.com">Email: idreesuthman3@gmail.com</a></div>
+        <div class="footer-heading mt-4">Address</div>
+        <div class="footer-contact-item"><i class="fa fa-location-dot"></i>E Adetayo Compound, Can-Oba, Ilorin, Kwara State</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      2026 © Copyright. All Right Reserved — Uthman Idrees
+    </div>
+  </div>
+</footer>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="fa fa-chevron-up"></i></button>
+
+<!-- ===== CONTACT MODAL ===== -->
+<div class="modal-overlay" id="contactModal">
+  <div class="modal-box">
+    <div id="contactFormView">
+      <div class="modal-header-img">
+        <div class="modal-avatar" style="display:flex;align-items:center;justify-content:center;font-size:2rem;color:rgba(255,255,255,0.4);background:linear-gradient(135deg,#333,#555)"><img src="images/me3.png" width="90"></div>
+        <div class="modal-welcome">
+          <h3>Hey Welcome!<br>Let's Work Together</h3>
+        </div>
+      </div>
+      <div class="modal-body-inner">
+        <p>"Have a project in mind or want to collaborate? Fill out the form below and I'll get back to you as soon as possible."</p>
+        <input class="form-field" type="text" placeholder="Enter Full Name" id="cf-name"/>
+        <input class="form-field" type="email" placeholder="Enter Email" id="cf-email"/>
+        <input class="form-field" type="number" placeholder="Budgets ₦" id="cf-budget"/>
+        <div class="form-select-wrap">
+          <select class="form-field select-field" id="cf-service">
+            <option value="" disabled selected>Select Service</option>
+            <option>UI/UX Design</option>
+            <option>Web Design</option>
+            <option>Landing Page</option>
+            <option>Graphic Design</option>
+          </select>
+        </div>
+        <textarea class="form-field" placeholder="Short Description about your Projects" id="cf-desc"></textarea>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-cancel" onclick="closeContactModal()">Cancel</button>
+        <button class="btn-submit" onclick="submitForm()">Submit</button>
+      </div>
+    </div>
+    <div id="contactSuccessView" style="display:none">
+      <div class="success-screen">
+        <div class="success-icon"><i class="fa fa-check"></i></div>
+        <h3>Success</h3>
+        <p>"Your message has been sent successfully.<br>I'll get back to you within 24 hours."</p>
+        <button class="btn-submit" style="width:auto;padding:14px 40px;" onclick="closeContactModal()">Go Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PROJECT MODAL ===== -->
+<div class="modal-overlay" id="projectModal">
+  <div class="modal-box">
+    <div class="project-modal-img" id="pm-img">
+      <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:3rem" id="pm-icon"></div>
+    </div>
+    <div class="project-modal-info">
+      <div class="project-modal-title" id="pm-title"></div>
+      <div class="project-modal-subtitle" id="pm-subtitle"></div>
+      <p class="project-modal-desc" id="pm-desc1"></p>
+      <p class="project-modal-desc" id="pm-desc2"></p>
+      <div style="overflow:hidden">
+        <button class="btn-back" onclick="closeProjectModal()">Back</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // ===== DARK MODE =====
+  const darkToggle = document.getElementById('darkToggle');
+  const darkToggleMobile = document.getElementById('darkToggleMobile');
+  let isDark = false;
+  function toggleDark() {
+    isDark = !isDark;
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    const icon = isDark ? 'fa-sun' : 'fa-moon';
+    darkToggle.innerHTML = `<i class="fa ${icon}"></i>`;
+    darkToggleMobile.innerHTML = `<i class="fa ${icon}"></i>`;
+  }
+  darkToggle.addEventListener('click', toggleDark);
+  darkToggleMobile.addEventListener('click', toggleDark);
+
+  // ===== HAMBURGER =====
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+  function closeMobile() { mobileMenu.classList.remove('open'); }
+
+  // ===== TYPEWRITER =====
+  const roles = ['UI/UX Designer', 'Product Designer', 'Graphic Designer'];
+  let roleIdx = 0, charIdx = 0, deleting = false;
+  const typedEl = document.getElementById('typedText');
+  function type() {
+    const current = roles[roleIdx];
+    if (!deleting) {
+      typedEl.textContent = current.substring(0, charIdx + 1);
+      charIdx++;
+      if (charIdx === current.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      typedEl.textContent = current.substring(0, charIdx - 1);
+      charIdx--;
+      if (charIdx === 0) { deleting = false; roleIdx = (roleIdx + 1) % roles.length; }
+    }
+    setTimeout(type, deleting ? 60 : 100);
+  }
+  type();
+
+  // ===== SCROLL ANIMATIONS =====
+  const fadeEls = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  fadeEls.forEach(el => observer.observe(el));
+
+  // ===== COUNTER =====
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.count);
+    const suffix = el.dataset.suffix || '+';
+    let current = 0;
+    const step = Math.ceil(target / 50);
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = current + suffix;
+      if (current >= target) clearInterval(interval);
+    }, 30);
+  }
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        animateCounter(e.target);
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => counterObserver.observe(el));
+
+  // ===== BACK TO TOP =====
+  const backBtn = document.getElementById('backToTop');
+  window.addEventListener('scroll', () => {
+    backBtn.classList.toggle('show', window.scrollY > 300);
+    // Active nav
+    const sections = ['home','services','about','experience','projects','why','contact'];
+    let current = '';
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 100) current = id;
+    });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  // ===== CONTACT MODAL =====
+  function openContactModal() {
+    document.getElementById('contactFormView').style.display = 'block';
+    document.getElementById('contactSuccessView').style.display = 'none';
+    document.getElementById('contactModal').classList.add('show');
+  }
+  function closeContactModal() {
+    document.getElementById('contactModal').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('contactFormView').style.display = 'block';
+      document.getElementById('contactSuccessView').style.display = 'none';
+      document.getElementById('cf-name').value = '';
+      document.getElementById('cf-email').value = '';
+      document.getElementById('cf-budget').value = '';
+      document.getElementById('cf-service').value = '';
+      document.getElementById('cf-desc').value = '';
+    }, 400);
+  }
+  function submitForm() {
+    const name = document.getElementById('cf-name').value.trim();
+    const email = document.getElementById('cf-email').value.trim();
+    if (!name || !email) { alert('Please fill in your name and email.'); return; }
+    document.getElementById('contactFormView').style.display = 'none';
+    document.getElementById('contactSuccessView').style.display = 'flex';
+    document.getElementById('contactSuccessView').style.flexDirection = 'column';
+  }
+  document.getElementById('contactModal').addEventListener('click', function(e) {
+    if (e.target === this) closeContactModal();
+  });
+
+  // ===== PROJECT MODAL =====
+  const projects = [
+    {
+      title: 'Consulting Web Dashboard',
+      subtitle: 'Admin Dashboard',
+      icon: '<i class="fa fa-chart-bar" style="color:rgba(255,255,255,0.6)"></i>',
+      bg: 'background:linear-gradient(135deg,#0d9488,#0f766e)',
+      desc1: 'The Admin Dashboard is designed to give administrators full control, visibility, and management of platform activities through a clean and intuitive interface.',
+      desc2: 'This dashboard focuses on clarity, data organization, and ease of navigation, ensuring that complex information is presented in a simple and actionable way.'
+    },
+    {
+      title: 'Huthride Mobile App',
+      subtitle: 'Mobile Application UI',
+      icon: '<i class="fa fa-mobile-screen" style="color:rgba(255,255,255,0.6)"></i>',
+      bg: 'background:linear-gradient(135deg,#6366f1,#4f46e5)',
+      desc1: 'Huthride is a modern ride-hailing mobile app designed with a focus on ease of use and smooth user experience for both riders and drivers.',
+      desc2: 'The design emphasizes clean navigation, minimal friction in booking flows, and real-time tracking with a bold, modern visual identity.'
+    },
+    {
+      title: 'Consulting Landing Page',
+      subtitle: 'Strategic Solutions for Business Growth',
+      icon: '<i class="fa fa-globe" style="color:rgba(255,255,255,0.6)"></i>',
+      bg: 'background:linear-gradient(135deg,#0ea5e9,#0284c7)',
+      desc1: 'A high-converting consulting landing page designed to communicate value, build trust, and drive client inquiries through compelling visuals and strategic copywriting.',
+      desc2: 'The layout follows conversion-focused principles with clear CTAs, social proof sections, and a responsive design that works seamlessly across all devices.'
+    }
+  ];
+  function openProjectModal(idx) {
+    const p = projects[idx];
+    document.getElementById('pm-img').style.cssText = `width:100%;height:220px;overflow:hidden;${p.bg}`;
+    document.getElementById('pm-icon').innerHTML = p.icon;
+    document.getElementById('pm-title').textContent = p.title;
+    document.getElementById('pm-subtitle').textContent = p.subtitle;
+    document.getElementById('pm-desc1').textContent = p.desc1;
+    document.getElementById('pm-desc2').textContent = p.desc2;
+    document.getElementById('projectModal').classList.add('show');
+  }
+  function closeProjectModal() {
+    document.getElementById('projectModal').classList.remove('show');
+  }
+  document.getElementById('projectModal').addEventListener('click', function(e) {
+    if (e.target === this) closeProjectModal();
+  });
+
+  // show mobile dark toggle on small screen
+  function handleResize() {
+    const isMobile = window.innerWidth <= 768;
+    document.getElementById('darkToggleMobile').style.display = isMobile ? 'flex' : 'none';
+  }
+  handleResize();
+  window.addEventListener('resize', handleResize);
+</script>
+</body>
+</html>
