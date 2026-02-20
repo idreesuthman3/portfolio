@@ -187,3 +187,62 @@ window.addEventListener('resize', handleResize);
       // Silently fail — tracking is non-critical
     });
 })();
+
+  function openContactModal() {
+    document.getElementById('contactFormView').style.display = 'block';
+    document.getElementById('contactSuccessView').style.display = 'none';
+    document.getElementById('contactModal').classList.add('show');
+  }
+
+  function closeContactModal() {
+    document.getElementById('contactModal').classList.remove('show');
+    setTimeout(() => {
+      document.getElementById('contactFormView').style.display = 'block';
+      document.getElementById('contactSuccessView').style.display = 'none';
+      document.getElementById('cf-name').value = '';
+      document.getElementById('cf-email').value = '';
+      document.getElementById('cf-budget').value = '';
+      document.getElementById('cf-service').value = '';
+      document.getElementById('cf-desc').value = '';
+    }, 400);
+  }
+
+  function submitForm() {
+    const name    = document.getElementById('cf-name').value.trim();
+    const email   = document.getElementById('cf-email').value.trim();
+    const budget  = document.getElementById('cf-budget').value.trim();
+    const service = document.getElementById('cf-service').value;
+    const desc    = document.getElementById('cf-desc').value.trim();
+
+    if (!name || !email) {
+      alert('Please fill in your name and email.');
+      return;
+    }
+
+    // Build WhatsApp prefill message
+    const message =
+      `Hello Uthman! 👋 I'd like to work with you.\n\n` +
+      `*Name:* ${name}\n` +
+      `*Email:* ${email}\n` +
+      (budget  ? `*Budget:* ₦${Number(budget).toLocaleString()}\n` : '') +
+      (service ? `*Service:* ${service}\n` : '') +
+      (desc    ? `*Project Details:* ${desc}` : '');
+
+    const waURL = `https://wa.me/+2349153458580text=${encodeURIComponent(message)}`;
+
+    // Show success view
+    document.getElementById('contactFormView').style.display = 'none';
+    document.getElementById('contactSuccessView').style.display = 'flex';
+    document.getElementById('contactSuccessView').style.flexDirection = 'column';
+
+    // Redirect after 2 seconds
+    setTimeout(() => {
+      window.open(waURL, '_blank');
+      closeContactModal();
+    }, 2000);
+  }
+
+  // Static backdrop — clicking outside does nothing
+  document.getElementById('contactModal').addEventListener('click', function(e) {
+    // intentionally empty — no close on backdrop click
+  });
