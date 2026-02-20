@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="images/me.png">
+  <meta name="theme-color" content="#1A1A1A">
+  <title>Dashboard – Uthman Idrees Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root{--orange:#FF6B00;--orange-light:#FF8C35;--sidebar-bg:#fff;--sidebar-border:#f0f0f0;--main-bg:#f7f7f7;--card-bg:#fff;--text:#1a1a1a;--text-muted:#888;--border:#e8e8e8;--shadow:rgba(0,0,0,0.06);--topbar-bg:#fff;}
+    [data-theme="dark"]{--sidebar-bg:#151515;--sidebar-border:#222;--main-bg:#111;--card-bg:#1e1e1e;--text:#f0f0f0;--text-muted:#777;--border:#2a2a2a;--shadow:rgba(0,0,0,0.35);--topbar-bg:#151515;}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--main-bg);color:var(--text);min-height:100vh;display:flex;transition:background .3s,color .3s;}
+    h1,h2,h3,h4{font-family:'Syne',sans-serif;}
+    .sidebar{width:230px;background:var(--sidebar-bg);border-right:1px solid var(--sidebar-border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform .3s,background .3s;}
+    .sidebar-logo{display:flex;align-items:center;gap:10px;padding:22px 22px 18px;border-bottom:1px solid var(--sidebar-border);}
+    .logo-u{width:36px;height:42px;}
+    .sidebar-brand{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text);}
+    .sidebar-nav{flex:1;padding:20px 14px;display:flex;flex-direction:column;gap:4px;}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;color:var(--text-muted);text-decoration:none;font-size:.9rem;font-weight:500;cursor:pointer;transition:all .2s;}
+    .nav-item:hover{background:rgba(255,107,0,.06);color:var(--orange);}
+    .nav-item.active{background:var(--orange);color:#fff;font-weight:700;}
+    .nav-item i{width:18px;text-align:center;font-size:.95rem;}
+    .sidebar-logout{padding:16px 14px 24px;border-top:1px solid var(--sidebar-border);}
+    .logout-btn{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:var(--orange);font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none;}
+    .logout-btn:hover{background:rgba(255,107,0,.08);}
+    .topbar{position:fixed;top:0;left:230px;right:0;height:64px;background:var(--topbar-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px;z-index:100;transition:background .3s,left .3s;}
+    .topbar-left{display:flex;align-items:center;gap:14px;}
+    .hamburger-btn{background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:6px;border-radius:8px;transition:background .2s;display:none;}
+    .hamburger-btn:hover{background:var(--border);}
+    .topbar-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);}
+    .topbar-right{display:flex;align-items:center;gap:12px;}
+    .dark-toggle{background:none;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);font-size:.9rem;transition:all .2s;}
+    .dark-toggle:hover{border-color:var(--orange);color:var(--orange);}
+    .topbar-refresh{background:none;border:1px solid var(--border);border-radius:8px;height:36px;padding:0 14px;display:flex;align-items:center;gap:7px;cursor:pointer;color:var(--text-muted);font-size:.8rem;font-family:'Syne',sans-serif;font-weight:600;transition:all .2s;}
+    .topbar-refresh:hover{border-color:var(--orange);color:var(--orange);}
+    .avatar{width:38px;height:38px;border-radius:50%;overflow:hidden;border:2px solid var(--orange);cursor:pointer;background:linear-gradient(135deg,#FF6B00,#cc4400);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:#fff;font-size:.85rem;}
+    .avatar img{width:100%;height:100%;object-fit:cover;}
+    .main-content{margin-left:230px;margin-top:64px;flex:1;padding:28px 30px;min-height:calc(100vh - 64px);transition:margin-left .3s;}
+    .welcome-card{background:var(--card-bg);border-radius:16px;padding:26px 30px;border:1px solid var(--border);margin-bottom:24px;box-shadow:0 2px 12px var(--shadow);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+    .welcome-card h2{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);}
+    .welcome-card p{color:var(--text-muted);font-size:.88rem;margin-top:4px;}
+    .live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.1);color:#22c55e;border-radius:20px;padding:5px 12px;font-size:.75rem;font-weight:700;font-family:'Syne',sans-serif;}
+    .live-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;animation:pulse 1.5s infinite;}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
+    .last-updated{font-size:.78rem;color:var(--text-muted);display:flex;align-items:center;gap:5px;}
+    .last-updated i{color:var(--orange);}
+    .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:20px;}
+    .stat-card{background:var(--card-bg);border-radius:14px;padding:22px 24px;border:1px solid var(--border);display:flex;align-items:center;gap:16px;box-shadow:0 2px 12px var(--shadow);transition:transform .3s,box-shadow .3s;position:relative;overflow:hidden;}
+    .stat-card::after{content:'';position:absolute;top:0;right:0;width:3px;height:100%;border-radius:0 14px 14px 0;}
+    .stat-card.c-orange::after{background:var(--orange);}
+    .stat-card.c-green::after{background:#22c55e;}
+    .stat-card.c-purple::after{background:#a855f7;}
+    .stat-card.c-blue::after{background:#3b82f6;}
+    .stat-card:hover{transform:translateY(-4px);box-shadow:0 8px 25px var(--shadow);}
+    .stat-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+    .si-orange{background:rgba(255,107,0,.12);color:var(--orange);}
+    .si-green{background:rgba(34,197,94,.12);color:#22c55e;}
+    .si-purple{background:rgba(168,85,247,.12);color:#a855f7;}
+    .si-blue{background:rgba(59,130,246,.12);color:#3b82f6;}
+    .stat-label{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
+    .stat-num{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;color:var(--text);line-height:1.1;margin-top:2px;}
+    .stat-sub{font-size:.74rem;color:var(--text-muted);margin-top:3px;}
+    .stat-loading{display:inline-block;width:50px;height:22px;background:var(--border);border-radius:6px;animation:shimmer 1.2s infinite;}
+    @keyframes shimmer{0%,100%{opacity:.4}50%{opacity:.9}}
+    .two-col{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;margin-bottom:20px;}
+    .section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .section-header h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--text);}
+    .view-all{font-size:.83rem;color:var(--text-muted);text-decoration:none;transition:color .2s;}
+    .view-all:hover{color:var(--orange);}
+    .services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+    .service-card{background:var(--card-bg);border-radius:14px;overflow:hidden;border:1px solid var(--border);box-shadow:0 2px 12px var(--shadow);transition:all .3s;cursor:pointer;}
+    .service-card:hover{transform:translateY(-5px);box-shadow:0 12px 30px var(--shadow);border-color:var(--orange);}
+    .service-img{width:100%;height:160px;overflow:hidden;position:relative;}
+    .svc-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:2.5rem;color:rgba(255,255,255,.5);}
+    .svc-inner img{width:100%;height:100%;object-fit:cover;}
+    .service-info{padding:16px;}
+    .service-name{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:var(--text);}
+    .content-card{background:var(--card-bg);border-radius:16px;padding:24px;border:1px solid var(--border);box-shadow:0 2px 12px var(--shadow);margin-bottom:20px;}
+    .cc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+    .cc-header h3{font-family:'Syne',sans-serif;font-size:.93rem;font-weight:800;color:var(--text);}
+    .data-table{width:100%;border-collapse:collapse;}
+    .data-table th{text-align:left;padding:10px 14px;background:var(--main-bg);font-family:'Syne',sans-serif;font-size:.73rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--border);}
+    .data-table td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:.85rem;color:var(--text);}
+    .data-table tr:last-child td{border-bottom:none;}
+    .data-table tr:hover td{background:rgba(255,107,0,.025);}
+    .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:.72rem;font-weight:700;}
+    .bg{background:rgba(34,197,94,.12);color:#22c55e;}
+    .bb{background:rgba(59,130,246,.12);color:#3b82f6;}
+    .bo{background:rgba(255,107,0,.12);color:var(--orange);}
+    .bgr{background:rgba(100,116,139,.12);color:#64748b;}
+    .ip-tag{font-family:monospace;font-size:.8rem;background:var(--main-bg);padding:2px 8px;border-radius:6px;border:1px solid var(--border);color:var(--text);}
+    .notif-item{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--border);}
+    .notif-item:last-child{border-bottom:none;}
+    .ndot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+    .ndot.g{background:#22c55e;} .ndot.o{background:var(--orange);} .ndot.b{background:#3b82f6;}
+    .notif-text{font-size:.85rem;color:var(--text);line-height:1.5;}
+    .notif-time{font-size:.74rem;color:var(--text-muted);margin-top:2px;}
+    .empty-state{text-align:center;padding:28px 20px;color:var(--text-muted);font-size:.88rem;}
+    .empty-state i{font-size:2rem;margin-bottom:10px;display:block;opacity:.35;}
+    .dash-footer{margin-top:40px;text-align:center;color:var(--text-muted);font-size:.82rem;padding:16px 0;border-top:1px solid var(--border);}
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:199;}
+    .sidebar-overlay.show{display:block;}
+    .page-section{display:none;}
+    .page-section.active{display:block;}
+    @media(max-width:1000px){.two-col{grid-template-columns:1fr;}.stats-grid{grid-template-columns:repeat(2,1fr);}.services-grid{grid-template-columns:repeat(2,1fr);}}
+    @media(max-width:768px){.sidebar{transform:translateX(-100%);}.sidebar.open{transform:translateX(0);}.topbar{left:0;}.main-content{margin-left:0;}.hamburger-btn{display:block;}.stats-grid{grid-template-columns:1fr;}.services-grid{grid-template-columns:1fr;}.welcome-card{flex-direction:column;align-items:flex-start;}}
+  </style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <svg class="logo-u" viewBox="0 0 60 70" fill="none">
+      <path d="M10 10 L10 42 C10 56 50 56 50 42 L50 10" stroke="var(--text)" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <circle cx="30" cy="62" r="5" fill="#FF6B00"/>
+      <circle cx="10" cy="10" r="5" fill="#FF8C35"/>
+      <circle cx="50" cy="10" r="5" fill="#FF6B00"/>
+    </svg>
+    <span class="sidebar-brand">Uthman Idrees</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="nav-item active" onclick="showPage('dashboard',this)"><i class="fa fa-grid-2"></i> Dashboard</a>
+    <a class="nav-item" onclick="showPage('visitors',this)"><i class="fa fa-users"></i> Visitors</a>
+    <a class="nav-item" onclick="showPage('services',this)"><i class="fa fa-layer-group"></i> Services</a>
+    <a class="nav-item" onclick="showPage('about',this)"><i class="fa fa-circle-user"></i> About</a>
+    <a class="nav-item" onclick="showPage('projects',this)"><i class="fa fa-folder-open"></i> Projects</a>
+    <a class="nav-item" onclick="showPage('experience',this)"><i class="fa fa-briefcase"></i> Experience</a>
+  </nav>
+  <div class="sidebar-logout">
+    <a class="logout-btn" href="login.html"><i class="fa fa-power-off"></i> Logout</a>
+  </div>
+</aside>
+
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
+    <span class="topbar-title" id="topbarTitle">My Admin Dashboard</span>
+  </div>
+  <div class="topbar-right">
+    <button class="topbar-refresh" onclick="loadStats(true)"><i class="fa fa-rotate-right"></i> Refresh</button>
+    <button class="dark-toggle" id="darkToggle"><i class="fa fa-moon"></i></button>
+    <div class="avatar"><img src="images/me.png" alt="UI" onerror="this.outerHTML='UI'"></div>
+  </div>
+</header>
+
+<main class="main-content">
+
+  <!-- DASHBOARD -->
+  <div class="page-section active" id="page-dashboard">
+    <div class="welcome-card">
+      <div><h2>Welcome, Baba! 👋</h2><p>Here's your real-time portfolio overview.</p></div>
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span class="live-badge"><span class="live-dot"></span>Live Data</span>
+        <span class="last-updated" id="lastUpdatedBadge"><i class="fa fa-clock"></i> Loading…</span>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card c-orange">
+        <div class="stat-icon si-orange"><i class="fa fa-layer-group"></i></div>
+        <div><div class="stat-label">Services</div><div class="stat-num">30</div><div class="stat-sub">Active offerings</div></div>
+      </div>
+      <div class="stat-card c-green">
+        <div class="stat-icon si-green"><i class="fa fa-folder-open"></i></div>
+        <div><div class="stat-label">Projects</div><div class="stat-num">239</div><div class="stat-sub">Total completed</div></div>
+      </div>
+      <div class="stat-card c-purple">
+        <div class="stat-icon si-purple"><i class="fa fa-users"></i></div>
+        <div><div class="stat-label">Unique Visitors</div><div class="stat-num" id="stat-unique"><span class="stat-loading"></span></div><div class="stat-sub" id="stat-unique-sub">Fetching…</div></div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card c-blue">
+        <div class="stat-icon si-blue"><i class="fa fa-chart-line"></i></div>
+        <div><div class="stat-label">Total Visits</div><div class="stat-num" id="stat-total-visits"><span class="stat-loading"></span></div><div class="stat-sub">All page loads</div></div>
+      </div>
+      <div class="stat-card c-orange">
+        <div class="stat-icon si-orange"><i class="fa fa-repeat"></i></div>
+        <div><div class="stat-label">Return Visits</div><div class="stat-num" id="stat-returning"><span class="stat-loading"></span></div><div class="stat-sub">Visits beyond first</div></div>
+      </div>
+      <div class="stat-card c-green">
+        <div class="stat-icon si-green"><i class="fa fa-clock-rotate-left"></i></div>
+        <div><div class="stat-label">Last Visitor</div><div class="stat-num" style="font-size:1rem" id="stat-last-visit"><span class="stat-loading"></span></div><div class="stat-sub">Most recent</div></div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <div class="section-header">
+          <h3>Featured Services</h3>
+          <a href="#" class="view-all" onclick="showPage('services',null);return false;">view all</a>
+        </div>
+        <div class="services-grid">
+          <div class="service-card">
+            <div class="service-img"><div class="svc-inner" style="background:linear-gradient(135deg,#6366f1,#4338ca)"><img src="images/uiux.png" onerror="this.style.display='none'"></div></div>
+            <div class="service-info"><div class="service-name">UIUX Design</div></div>
+          </div>
+          <div class="service-card">
+            <div class="service-img"><div class="svc-inner" style="background:linear-gradient(135deg,#0ea5e9,#0369a1)"><img src="images/web.png" onerror="this.style.display='none'"></div></div>
+            <div class="service-info"><div class="service-name">Web Design</div></div>
+          </div>
+          <div class="service-card">
+            <div class="service-img"><div class="svc-inner" style="background:linear-gradient(135deg,#f59e0b,#d97706)"><img src="images/graphics.png" onerror="this.style.display='none'"></div></div>
+            <div class="service-info"><div class="service-name">Graphic Design</div></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="content-card" style="margin-bottom:0">
+          <div class="cc-header">
+            <h3><i class="fa fa-satellite-dish" style="color:var(--orange);margin-right:6px"></i>Recent Visitors</h3>
+            <a href="#" class="view-all" onclick="showPage('visitors',null);return false;">view all</a>
+          </div>
+          <div id="recentVisitorsList"><div class="empty-state"><i class="fa fa-spinner fa-spin"></i>Loading…</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-footer">2026 © Copyright. All Right Reserved – Uthman Idrees</div>
+  </div>
+
+  <!-- VISITORS -->
+  <div class="page-section" id="page-visitors">
+    <div class="welcome-card">
+      <div><h2>Visitor Analytics</h2><p>Live data from <code style="background:var(--main-bg);padding:2px 6px;border-radius:4px;font-size:.8rem">visitor.json</code></p></div>
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span class="live-badge"><span class="live-dot"></span>Auto-refresh 30s</span>
+        <button class="topbar-refresh" onclick="loadStats(true)"><i class="fa fa-rotate-right"></i> Refresh</button>
+      </div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat-card c-purple"><div class="stat-icon si-purple"><i class="fa fa-fingerprint"></i></div><div><div class="stat-label">Unique IPs</div><div class="stat-num" id="vp-unique"><span class="stat-loading"></span></div><div class="stat-sub">Distinct visitors</div></div></div>
+      <div class="stat-card c-blue"><div class="stat-icon si-blue"><i class="fa fa-eye"></i></div><div><div class="stat-label">Total Views</div><div class="stat-num" id="vp-total"><span class="stat-loading"></span></div><div class="stat-sub">All visits combined</div></div></div>
+      <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa fa-percent"></i></div><div><div class="stat-label">Avg Visits / IP</div><div class="stat-num" id="vp-avg"><span class="stat-loading"></span></div><div class="stat-sub">Engagement ratio</div></div></div>
+    </div>
+    <div class="content-card">
+      <div class="cc-header">
+        <h3>Full Visitor Log</h3>
+        <span class="last-updated" id="vp-last-updated"><i class="fa fa-clock"></i> —</span>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead><tr><th>#</th><th>IP Address</th><th>Visits</th><th>First Seen</th><th>Last Seen</th><th>Status</th></tr></thead>
+          <tbody id="visitorTableBody"><tr><td colspan="6"><div class="empty-state"><i class="fa fa-spinner fa-spin"></i> Loading…</div></td></tr></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="dash-footer">2026 © Copyright. All Right Reserved – Uthman Idrees</div>
+  </div>
+
+  <!-- SERVICES -->
+  <div class="page-section" id="page-services">
+    <div class="welcome-card"><div><h2>Services</h2><p>Manage your service offerings.</p></div></div>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-img"><div class="svc-inner" style="background:linear-gradient(135deg,#6366f1,#4338ca)"><img src="images/uiux.png" onerror="this.style.display='none'"></div></div><div class="service-info"><div class="service-name">UI/UX Design</div></div></div>
+      <div class="service-card"><div class="service-img"><div class="svc-inner" style="background:linear-gradient(135deg,#0ea5e9,#0369a1)"><img src="images/web.png" onerror="this.style.display='none'"></div></div><div class="service-info"><div class="service-name">Web Design</div></div></div>
+      <div class="service-card"><div class="service-img"><div class="svc-inner" style="background:linear-gradient(135deg,#f59e0b,#d97706)"><img src="images/graphics.png" onerror="this.style.display='none'"></div></div><div class="service-info"><div class="service-name">Graphic Design</div></div></div>
+      <div class="service-card"><div class="service-img"><div class="svc-inner" style="background:linear-gradient(135deg,#22c55e,#16a34a)"><img src="images/landing.png" onerror="this.style.display='none'"></div></div><div class="service-info"><div class="service-name">Landing Page</div></div></div>
+    </div>
+    <div class="dash-footer">2026 © Copyright. All Right Reserved – Uthman Idrees</div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="page-section" id="page-about">
+    <div class="welcome-card"><div><h2>About Me</h2><p>Your profile information.</p></div></div>
+    <div class="stats-grid">
+      <div class="stat-card c-orange"><div class="stat-icon si-orange"><i class="fa fa-calendar"></i></div><div><div class="stat-label">Years Experience</div><div class="stat-num">2+</div></div></div>
+      <div class="stat-card c-green"><div class="stat-icon si-green"><i class="fa fa-users"></i></div><div><div class="stat-label">Clients Served</div><div class="stat-num">95+</div></div></div>
+      <div class="stat-card c-purple"><div class="stat-icon si-purple"><i class="fa fa-chart-line"></i></div><div><div class="stat-label">Success Rate</div><div class="stat-num">70%</div></div></div>
+    </div>
+    <div class="content-card"><div class="cc-header"><h3>Profile</h3></div><p style="color:var(--text-muted);line-height:1.8;font-size:.92rem">A passionate UI/UX, Product designer, Graphic Designer, based in Ilorin, Kwara State.</p></div>
+    <div class="dash-footer">2026 © Copyright. All Right Reserved – Uthman Idrees</div>
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="page-section" id="page-projects">
+    <div class="welcome-card"><div><h2>My Projects</h2><p>All completed and ongoing design projects.</p></div></div>
+    <div class="content-card" style="padding:0;overflow:hidden">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Project</th><th>Type</th><th>Year</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>Consulting Web Dashboard</td><td>UI/UX</td><td>2025</td><td><span class="badge bg">Completed</span></td></tr>
+          <tr><td>02</td><td>Hutride Mobile App</td><td>Mobile UI</td><td>2025</td><td><span class="badge bg">Completed</span></td></tr>
+          <tr><td>03</td><td>Consulting Landing Page</td><td>Web Design</td><td>2024</td><td><span class="badge bg">Completed</span></td></tr>
+          <tr><td>04</td><td>Deeyah Couture Flyer</td><td>Graphic</td><td>2024</td><td><span class="badge bo">Featured</span></td></tr>
+          <tr><td>05</td><td>Portfolio Website</td><td>Web Design</td><td>2026</td><td><span class="badge bb">In Progress</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="dash-footer">2026 © Copyright. All Right Reserved – Uthman Idrees</div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <div class="page-section" id="page-experience">
+    <div class="welcome-card"><div><h2>Work Experience</h2><p>My professional design journey.</p></div></div>
+    <div class="content-card" style="padding:0;overflow:hidden">
+      <table class="data-table">
+        <thead><tr><th>#</th><th>Company</th><th>Role</th><th>Period</th><th>Type</th></tr></thead>
+        <tbody>
+          <tr><td>01</td><td>Akot Print Design Hub</td><td>Graphic Designer</td><td>2021 – 2022</td><td><span class="badge bo">Full-time</span></td></tr>
+          <tr><td>02</td><td>Musty Grafix Design</td><td>Graphic Designer</td><td>2023 – 2024</td><td><span class="badge bo">Full-time</span></td></tr>
+          <tr><td>03</td><td>Ogunjobi Tech Hub</td><td>UI/UX Designer</td><td>2024 – Present</td><td><span class="badge bg">Current</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="dash-footer">2026 © Copyright. All Right Reserved – Uthman Idrees</div>
+  </div>
+
+</main>
+
+<script>
+  // Dark mode
+  const dt = document.getElementById('darkToggle');
+  let dark = false;
+  dt.addEventListener('click', () => {
+    dark = !dark;
+    document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+    dt.innerHTML = dark ? '<i class="fa fa-sun"></i>' : '<i class="fa fa-moon"></i>';
+  });
+
+  // Sidebar
+  function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('open'); document.getElementById('sidebarOverlay').classList.toggle('show'); }
+  function closeSidebar(){ document.getElementById('sidebar').classList.remove('open'); document.getElementById('sidebarOverlay').classList.remove('show'); }
+
+  // Pages
+  const titles = {dashboard:'My Admin Dashboard',visitors:'Visitor Analytics',services:'Services',about:'About Me',projects:'My Projects',experience:'Work Experience'};
+  function showPage(id, el) {
+    document.querySelectorAll('.page-section').forEach(s => s.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+    document.getElementById('topbarTitle').textContent = titles[id] || 'Dashboard';
+    closeSidebar();
+    window.scrollTo({top:0,behavior:'smooth'});
+    if (id === 'visitors') renderVisitorPage(lastData);
+  }
+
+  // Utils
+  function formatTime(dt) {
+    if (!dt) return '—';
+    try {
+      const d = new Date(dt.replace(' ','T')), now = new Date();
+      const s = Math.floor((now - d) / 1000);
+      if (s < 60) return s + 's ago';
+      if (s < 3600) return Math.floor(s/60) + 'm ago';
+      if (s < 86400) return Math.floor(s/3600) + 'h ago';
+      return Math.floor(s/86400) + 'd ago';
+    } catch { return dt; }
+  }
+  function animNum(el, target) {
+    if (!el) return;
+    let n = 0; const step = Math.max(1, Math.ceil(target / 60));
+    const t = setInterval(() => {
+      n = Math.min(n + step, target);
+      el.textContent = n.toLocaleString();
+      if (n >= target) clearInterval(t);
+    }, 18);
+  }
+
+  let lastData = null;
+
+  function renderDash(d) {
+    lastData = d;
+    animNum(document.getElementById('stat-unique'), d.total_unique_visitors);
+    document.getElementById('stat-unique-sub').textContent = d.total_unique_visitors === 0 ? 'No visitors yet' : 'Unique IPs tracked';
+    animNum(document.getElementById('stat-total-visits'), d.total_visits);
+    const ret = Math.max(0, d.total_visits - d.total_unique_visitors);
+    animNum(document.getElementById('stat-returning'), ret);
+    document.getElementById('stat-last-visit').textContent = formatTime(d.last_updated) || '—';
+    document.getElementById('lastUpdatedBadge').innerHTML = '<i class="fa fa-clock"></i> Updated ' + formatTime(d.last_updated);
+    renderRecent(d.recent_visitors || []);
+  }
+
+  function renderVisitorPage(d) {
+    if (!d) return;
+    animNum(document.getElementById('vp-unique'), d.total_unique_visitors);
+    animNum(document.getElementById('vp-total'), d.total_visits);
+    const avg = d.total_unique_visitors > 0 ? (d.total_visits / d.total_unique_visitors).toFixed(1) : '0';
+    document.getElementById('vp-avg').textContent = avg;
+    document.getElementById('vp-last-updated').innerHTML = '<i class="fa fa-clock"></i> ' + formatTime(d.last_updated);
+    const tbody = document.getElementById('visitorTableBody');
+    const v = d.recent_visitors || [];
+    if (!v.length) { tbody.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fa fa-ghost"></i>No visitors logged yet. Share your portfolio!</div></td></tr>'; return; }
+    tbody.innerHTML = v.map((r, i) => `
+      <tr>
+        <td>${i+1}</td>
+        <td><span class="ip-tag">${r.ip}</span></td>
+        <td><strong>${r.visits}</strong></td>
+        <td>${formatTime(r.first_seen)}</td>
+        <td>${formatTime(r.last_seen)}</td>
+        <td>${r.visits === 1 ? '<span class="badge bg">New</span>' : '<span class="badge bb">Returning (' + r.visits + 'x)</span>'}</td>
+      </tr>`).join('');
+  }
+
+  function renderRecent(v) {
+    const el = document.getElementById('recentVisitorsList');
+    if (!v.length) { el.innerHTML = '<div class="empty-state"><i class="fa fa-ghost"></i>No visitors yet.</div>'; return; }
+    el.innerHTML = v.slice(0,6).map(r => `
+      <div class="notif-item">
+        <div class="ndot ${r.visits===1?'g':'b'}"></div>
+        <div>
+          <div class="notif-text"><span class="ip-tag">${r.ip}</span> &mdash; ${r.visits} visit${r.visits>1?'s':''}</div>
+          <div class="notif-time">Last seen ${formatTime(r.last_seen)}</div>
+        </div>
+      </div>`).join('');
+  }
+
+  function loadStats(force) {
+    fetch('visitor-tracker.php?action=stats&t=' + Date.now())
+      .then(r => { if (!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(d => { renderDash(d); renderVisitorPage(d); })
+      .catch(e => {
+        console.warn('Tracker offline:', e.message);
+        ['stat-unique','stat-total-visits','stat-returning','vp-unique','vp-total','vp-avg']
+          .forEach(id => { const el=document.getElementById(id); if(el) el.textContent='—'; });
+        document.getElementById('stat-unique-sub').textContent = 'PHP server required';
+        document.getElementById('stat-last-visit').textContent = '—';
+        document.getElementById('lastUpdatedBadge').innerHTML = '<i class="fa fa-triangle-exclamation" style="color:#f59e0b"></i> Tracker offline';
+        const tb = document.getElementById('visitorTableBody');
+        if (tb) tb.innerHTML = '<tr><td colspan="6"><div class="empty-state"><i class="fa fa-server"></i><strong>visitor-tracker.php not reachable.</strong><br>Deploy on a PHP server and data will appear here.</div></td></tr>';
+        const rvl = document.getElementById('recentVisitorsList');
+        if (rvl) rvl.innerHTML = '<div class="empty-state"><i class="fa fa-server"></i>PHP server required.</div>';
+      });
+  }
+
+  loadStats(true);
+  setInterval(() => loadStats(true), 30000);
+</script>
+</body>
+</html>

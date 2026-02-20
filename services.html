@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sample Page – Uthman Idrees Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    :root{
+      --orange:#FF6B00;--orange-light:#FF8C35;
+      --dark:#1a1a1a;
+      --sidebar-bg:#fff;--sidebar-border:#f0f0f0;
+      --main-bg:#f7f7f7;--card-bg:#fff;
+      --text:#1a1a1a;--text-muted:#888;
+      --border:#e8e8e8;--shadow:rgba(0,0,0,0.06);
+      --topbar-bg:#fff;
+    }
+    [data-theme="dark"]{
+      --sidebar-bg:#151515;--sidebar-border:#222;
+      --main-bg:#111;--card-bg:#1e1e1e;
+      --text:#f0f0f0;--text-muted:#888;
+      --border:#2a2a2a;--shadow:rgba(0,0,0,0.3);
+      --topbar-bg:#151515;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;background:var(--main-bg);color:var(--text);min-height:100vh;display:flex;transition:background 0.3s,color 0.3s;}
+    h1,h2,h3,h4{font-family:'Syne',sans-serif;}
+
+    /* === SIDEBAR (same as dashboard) === */
+    .sidebar{width:230px;background:var(--sidebar-bg);border-right:1px solid var(--sidebar-border);display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;z-index:200;transition:transform 0.3s,background 0.3s;}
+    .sidebar-logo{display:flex;align-items:center;gap:10px;padding:22px 22px 18px;border-bottom:1px solid var(--sidebar-border);}
+    .logo-u{width:36px;height:42px;}
+    .sidebar-brand{font-family:'Syne',sans-serif;font-size:0.95rem;font-weight:700;color:var(--text);}
+    .sidebar-nav{flex:1;padding:20px 14px;display:flex;flex-direction:column;gap:4px;}
+    .nav-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;color:var(--text-muted);text-decoration:none;font-size:0.9rem;font-weight:500;cursor:pointer;transition:all 0.2s;}
+    .nav-item:hover{background:rgba(255,107,0,0.06);color:var(--orange);}
+    .nav-item.active{background:var(--orange);color:#fff;font-weight:700;}
+    .nav-item i{width:18px;text-align:center;font-size:0.95rem;}
+    .sidebar-logout{padding:16px 14px 24px;border-top:1px solid var(--sidebar-border);}
+    .logout-btn{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:10px;color:var(--orange);font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s;text-decoration:none;}
+    .logout-btn:hover{background:rgba(255,107,0,0.08);}
+
+    /* === TOPBAR === */
+    .topbar{position:fixed;top:0;left:230px;right:0;height:64px;background:var(--topbar-bg);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 30px;z-index:100;transition:background 0.3s,left 0.3s;}
+    .topbar-left{display:flex;align-items:center;gap:14px;}
+    .hamburger-btn{background:none;border:none;color:var(--text);font-size:1.2rem;cursor:pointer;padding:6px;border-radius:8px;transition:background 0.2s;display:none;}
+    .hamburger-btn:hover{background:var(--border);}
+    .topbar-title{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--text);}
+    .topbar-right{display:flex;align-items:center;gap:12px;}
+    .dark-toggle{background:none;border:1px solid var(--border);border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-muted);font-size:0.9rem;transition:all 0.2s;}
+    .dark-toggle:hover{border-color:var(--orange);color:var(--orange);}
+    .avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FF6B00,#cc4400);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;color:#fff;font-size:0.85rem;cursor:pointer;border:2px solid var(--orange);}
+
+    /* === MAIN === */
+    .main-content{margin-left:230px;margin-top:64px;flex:1;padding:28px 30px;min-height:calc(100vh - 64px);transition:margin-left 0.3s;}
+
+    /* Breadcrumb */
+    .breadcrumb-custom{display:flex;align-items:center;gap:8px;margin-bottom:24px;font-size:0.85rem;}
+    .breadcrumb-custom a{color:var(--text-muted);text-decoration:none;transition:color 0.2s;}
+    .breadcrumb-custom a:hover{color:var(--orange);}
+    .breadcrumb-custom span{color:var(--text-muted);}
+    .breadcrumb-custom .current{color:var(--orange);font-weight:600;}
+
+    /* Page header */
+    .page-header{
+      background:var(--card-bg);
+      border-radius:16px;
+      padding:28px 30px;
+      border:1px solid var(--border);
+      box-shadow:0 2px 12px var(--shadow);
+      margin-bottom:24px;
+      display:flex;align-items:center;justify-content:space-between;
+      flex-wrap:wrap;gap:14px;
+    }
+    .page-header-title h2{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);}
+    .page-header-title p{color:var(--text-muted);font-size:0.85rem;margin-top:4px;}
+    .btn-primary{
+      padding:11px 24px;background:var(--orange);color:#fff;
+      border:none;border-radius:10px;font-family:'Syne',sans-serif;
+      font-size:0.88rem;font-weight:700;cursor:pointer;
+      display:flex;align-items:center;gap:8px;
+      transition:all 0.3s;
+    }
+    .btn-primary:hover{background:var(--orange-light);transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,107,0,0.3);}
+    .btn-secondary{
+      padding:10px 22px;background:var(--card-bg);color:var(--text);
+      border:1px solid var(--border);border-radius:10px;
+      font-family:'Syne',sans-serif;font-size:0.88rem;font-weight:600;
+      cursor:pointer;transition:all 0.2s;
+    }
+    .btn-secondary:hover{border-color:var(--orange);color:var(--orange);}
+
+    /* Cards */
+    .content-card{background:var(--card-bg);border-radius:16px;padding:24px;border:1px solid var(--border);box-shadow:0 2px 12px var(--shadow);margin-bottom:20px;}
+    .content-card h3{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:16px;color:var(--text);padding-bottom:12px;border-bottom:1px solid var(--border);}
+
+    /* Grid layouts */
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+    .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+
+    /* Form elements */
+    .form-group{margin-bottom:18px;}
+    .form-label{display:block;font-size:0.82rem;font-weight:600;color:var(--text-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.5px;}
+    .form-input{width:100%;padding:13px 16px;background:var(--main-bg);border:1.5px solid var(--border);border-radius:10px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--text);outline:none;transition:all 0.2s;}
+    .form-input:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(255,107,0,0.1);}
+    .form-input::placeholder{color:var(--text-muted);}
+    textarea.form-input{resize:vertical;min-height:100px;}
+    select.form-input{cursor:pointer;}
+
+    /* Tabs */
+    .tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--main-bg);padding:4px;border-radius:12px;width:fit-content;}
+    .tab{padding:9px 20px;border-radius:9px;font-size:0.88rem;font-weight:600;cursor:pointer;color:var(--text-muted);border:none;background:none;transition:all 0.2s;font-family:'DM Sans',sans-serif;}
+    .tab.active{background:var(--card-bg);color:var(--orange);box-shadow:0 2px 8px var(--shadow);}
+
+    /* List items */
+    .list-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border);}
+    .list-item:last-child{border-bottom:none;}
+    .list-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+    .list-info{flex:1;}
+    .list-title{font-size:0.9rem;font-weight:600;color:var(--text);}
+    .list-sub{font-size:0.8rem;color:var(--text-muted);margin-top:2px;}
+    .list-action{color:var(--text-muted);font-size:0.85rem;cursor:pointer;transition:color 0.2s;}
+    .list-action:hover{color:var(--orange);}
+
+    /* Info rows */
+    .info-row{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+    .info-row:last-child{border-bottom:none;}
+    .info-key{font-size:0.82rem;font-weight:600;color:var(--text-muted);min-width:130px;text-transform:uppercase;letter-spacing:0.4px;padding-top:2px;}
+    .info-val{font-size:0.9rem;color:var(--text);line-height:1.6;}
+    .info-val a{color:var(--orange);text-decoration:none;}
+
+    /* Badge */
+    .badge{display:inline-block;padding:4px 10px;border-radius:20px;font-size:0.75rem;font-weight:600;}
+    .badge.orange{background:rgba(255,107,0,0.12);color:var(--orange);}
+    .badge.green{background:rgba(34,197,94,0.12);color:#22c55e;}
+    .badge.blue{background:rgba(59,130,246,0.12);color:#3b82f6;}
+    .badge.gray{background:rgba(100,116,139,0.12);color:#64748b;}
+
+    /* Progress bars */
+    .progress-item{margin-bottom:16px;}
+    .progress-header{display:flex;justify-content:space-between;margin-bottom:6px;}
+    .progress-label{font-size:0.85rem;font-weight:600;color:var(--text);}
+    .progress-pct{font-size:0.82rem;color:var(--orange);font-weight:700;}
+    .progress-bar{height:8px;background:var(--main-bg);border-radius:10px;overflow:hidden;}
+    .progress-fill{height:100%;background:linear-gradient(90deg,var(--orange),var(--orange-light));border-radius:10px;transition:width 1s ease;}
+
+    /* Notification items */
+    .notif-item{display:flex;gap:12px;padding:14px 0;border-bottom:1px solid var(--border);align-items:flex-start;}
+    .notif-item:last-child{border-bottom:none;}
+    .notif-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+    .notif-dot.orange{background:var(--orange);}
+    .notif-dot.green{background:#22c55e;}
+    .notif-dot.blue{background:#3b82f6;}
+    .notif-text{font-size:0.88rem;color:var(--text);line-height:1.5;}
+    .notif-time{font-size:0.78rem;color:var(--text-muted);margin-top:3px;}
+
+    /* Footer */
+    .dash-footer{margin-top:40px;text-align:center;color:var(--text-muted);font-size:0.82rem;padding:16px 0;border-top:1px solid var(--border);}
+
+    /* Mobile overlay */
+    .sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:199;}
+    .sidebar-overlay.show{display:block;}
+
+    @media(max-width:900px){.two-col,.three-col{grid-template-columns:1fr;}}
+    @media(max-width:768px){
+      .sidebar{transform:translateX(-100%);}
+      .sidebar.open{transform:translateX(0);}
+      .topbar{left:0;}
+      .main-content{margin-left:0;}
+      .hamburger-btn{display:block;}
+      .page-header{flex-direction:column;align-items:flex-start;}
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <svg class="logo-u" viewBox="0 0 60 70" fill="none">
+      <path d="M10 10 L10 42 C10 56 50 56 50 42 L50 10" stroke="var(--text)" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <circle cx="30" cy="62" r="5" fill="#FF6B00"/>
+      <circle cx="10" cy="10" r="5" fill="#FF8C35"/>
+      <circle cx="50" cy="10" r="5" fill="#FF6B00"/>
+    </svg>
+    <span class="sidebar-brand">Uthman Idrees</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a class="nav-item" href="dashboard.html"><i class="fa fa-grid-2"></i> Dashboard</a>
+    <a class="nav-item" href="dashboard.html"><i class="fa fa-layer-group"></i> Services</a>
+    <a class="nav-item" href="dashboard.html"><i class="fa fa-circle-user"></i> About</a>
+    <a class="nav-item active" href="#"><i class="fa fa-folder-open"></i> Projects</a>
+    <a class="nav-item" href="dashboard.html"><i class="fa fa-briefcase"></i> Experience</a>
+  </nav>
+  <div class="sidebar-logout">
+    <a class="logout-btn" href="login.html"><i class="fa fa-power-off"></i> Logout</a>
+  </div>
+</aside>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-left">
+    <button class="hamburger-btn" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
+    <span class="topbar-title">Projects</span>
+  </div>
+  <div class="topbar-right">
+    <button class="dark-toggle" id="darkToggle"><i class="fa fa-moon"></i></button>
+    <div class="avatar">UI</div>
+  </div>
+</header>
+
+<!-- MAIN -->
+<main class="main-content">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-custom">
+    <a href="dashboard.html">Dashboard</a>
+    <span>/</span>
+    <span class="current">Projects</span>
+  </div>
+
+  <!-- Page Header -->
+  <div class="page-header">
+    <div class="page-header-title">
+      <h2>My Projects</h2>
+      <p>Manage all your design projects and portfolio pieces</p>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;">
+      <button class="btn-secondary"><i class="fa fa-filter" style="margin-right:6px"></i>Filter</button>
+      <button class="btn-primary"><i class="fa fa-plus"></i> Add Project</button>
+    </div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab(this,'all')">All (5)</button>
+    <button class="tab" onclick="switchTab(this,'completed')">Completed</button>
+    <button class="tab" onclick="switchTab(this,'progress')">In Progress</button>
+  </div>
+
+  <!-- Projects List + Sidebar Info -->
+  <div class="two-col">
+
+    <!-- Project List -->
+    <div class="content-card">
+      <h3>Project List</h3>
+      <div class="list-item">
+        <div class="list-icon" style="background:rgba(99,102,241,0.12);color:#6366f1"><i class="fa fa-desktop"></i></div>
+        <div class="list-info">
+          <div class="list-title">Consulting Web Dashboard</div>
+          <div class="list-sub">UI/UX Design · 2025 <span class="badge green" style="margin-left:8px">Completed</span></div>
+        </div>
+        <span class="list-action" onclick="alert('Edit Consulting Web Dashboard')"><i class="fa fa-pen-to-square"></i></span>
+      </div>
+      <div class="list-item">
+        <div class="list-icon" style="background:rgba(168,85,247,0.12);color:#a855f7"><i class="fa fa-mobile-screen"></i></div>
+        <div class="list-info">
+          <div class="list-title">Huthride Mobile App</div>
+          <div class="list-sub">Mobile UI · 2025 <span class="badge green" style="margin-left:8px">Completed</span></div>
+        </div>
+        <span class="list-action" onclick="alert('Edit Huthride')"><i class="fa fa-pen-to-square"></i></span>
+      </div>
+      <div class="list-item">
+        <div class="list-icon" style="background:rgba(14,165,233,0.12);color:#0ea5e9"><i class="fa fa-globe"></i></div>
+        <div class="list-info">
+          <div class="list-title">Consulting Landing Page</div>
+          <div class="list-sub">Web Design · 2024 <span class="badge green" style="margin-left:8px">Completed</span></div>
+        </div>
+        <span class="list-action" onclick="alert('Edit Landing Page')"><i class="fa fa-pen-to-square"></i></span>
+      </div>
+      <div class="list-item">
+        <div class="list-icon" style="background:rgba(245,158,11,0.12);color:#f59e0b"><i class="fa fa-palette"></i></div>
+        <div class="list-info">
+          <div class="list-title">Deeyah Couture Flyer</div>
+          <div class="list-sub">Graphic Design · 2024 <span class="badge orange" style="margin-left:8px">Featured</span></div>
+        </div>
+        <span class="list-action" onclick="alert('Edit Deeyah')"><i class="fa fa-pen-to-square"></i></span>
+      </div>
+      <div class="list-item">
+        <div class="list-icon" style="background:rgba(255,107,0,0.12);color:var(--orange)"><i class="fa fa-code"></i></div>
+        <div class="list-info">
+          <div class="list-title">Portfolio Website</div>
+          <div class="list-sub">Web Design · 2026 <span class="badge blue" style="margin-left:8px">In Progress</span></div>
+        </div>
+        <span class="list-action" onclick="alert('Edit Portfolio')"><i class="fa fa-pen-to-square"></i></span>
+      </div>
+    </div>
+
+    <!-- Right Column -->
+    <div>
+      <!-- Project Detail -->
+      <div class="content-card">
+        <h3>Project Details</h3>
+        <div class="info-row"><div class="info-key">Name</div><div class="info-val">Consulting Web Dashboard</div></div>
+        <div class="info-row"><div class="info-key">Type</div><div class="info-val">UI/UX Design</div></div>
+        <div class="info-row"><div class="info-key">Year</div><div class="info-val">2025</div></div>
+        <div class="info-row"><div class="info-key">Status</div><div class="info-val"><span class="badge green">Completed</span></div></div>
+        <div class="info-row"><div class="info-key">Tools</div><div class="info-val">Figma, Adobe XD</div></div>
+        <div class="info-row"><div class="info-key">Description</div><div class="info-val">Admin dashboard for consulting platform with full data visibility and management.</div></div>
+      </div>
+
+      <!-- Skills Progress -->
+      <div class="content-card">
+        <h3>Design Skills Proficiency</h3>
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-label">UI/UX Design</span><span class="progress-pct">92%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:92%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-label">Web Design</span><span class="progress-pct">85%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-label">Graphic Design</span><span class="progress-pct">88%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:88%"></div></div>
+        </div>
+        <div class="progress-item">
+          <div class="progress-header"><span class="progress-label">Figma</span><span class="progress-pct">95%</span></div>
+          <div class="progress-bar"><div class="progress-fill" style="width:95%"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Add Form + Notifications -->
+  <div class="two-col">
+    <div class="content-card">
+      <h3>Quick Add Project</h3>
+      <div class="form-group">
+        <label class="form-label">Project Name</label>
+        <input class="form-input" type="text" placeholder="e.g. E-commerce Mobile App"/>
+      </div>
+      <div class="two-col" style="gap:14px;margin-bottom:18px">
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Type</label>
+          <select class="form-input">
+            <option>UI/UX Design</option>
+            <option>Web Design</option>
+            <option>Graphic Design</option>
+            <option>Landing Page</option>
+          </select>
+        </div>
+        <div class="form-group" style="margin-bottom:0">
+          <label class="form-label">Status</label>
+          <select class="form-input">
+            <option>Completed</option>
+            <option>In Progress</option>
+            <option>Featured</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-input" placeholder="Brief description of the project..."></textarea>
+      </div>
+      <button class="btn-primary" style="width:100%;justify-content:center;" onclick="handleSave()">
+        <i class="fa fa-save"></i> Save Project
+      </button>
+    </div>
+
+    <div class="content-card">
+      <h3>Recent Activity</h3>
+      <div class="notif-item">
+        <div class="notif-dot green"></div>
+        <div>
+          <div class="notif-text">Portfolio Website marked as <strong>In Progress</strong></div>
+          <div class="notif-time">Just now</div>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot orange"></div>
+        <div>
+          <div class="notif-text">New inquiry received from a client</div>
+          <div class="notif-time">2 hours ago</div>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot blue"></div>
+        <div>
+          <div class="notif-text">Huthride Mobile App added to portfolio</div>
+          <div class="notif-time">1 day ago</div>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot orange"></div>
+        <div>
+          <div class="notif-text">Consulting Dashboard project completed</div>
+          <div class="notif-time">3 days ago</div>
+        </div>
+      </div>
+      <div class="notif-item">
+        <div class="notif-dot green"></div>
+        <div>
+          <div class="notif-text">Profile views reached 3.9k visitors</div>
+          <div class="notif-time">1 week ago</div>
+        </div>
+      </div>
+
+      <!-- Contact info block -->
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border);">
+        <div style="font-family:'Syne',sans-serif;font-size:0.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:12px;">Quick Contact</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <a href="tel:+2349153458580" style="display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:0.85rem;text-decoration:none;"><i class="fab fa-whatsapp" style="color:#25d366;width:16px"></i>+234 9153458580</a>
+          <a href="mailto:idreesuthman3@gmail.com" style="display:flex;align-items:center;gap:10px;color:var(--text-muted);font-size:0.85rem;text-decoration:none;"><i class="fa fa-envelope" style="color:var(--orange);width:16px"></i>idreesuthman3@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-footer">2026 © Copyright. All Right Reserved – Uthman Idrees</div>
+</main>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:30px;right:30px;background:#22c55e;color:#fff;padding:14px 24px;border-radius:12px;font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;box-shadow:0 8px 25px rgba(0,0,0,0.2);transform:translateY(80px);opacity:0;transition:all 0.4s;z-index:9999;">
+  ✓ Project saved successfully!
+</div>
+
+<script>
+  // Dark mode
+  const darkToggle = document.getElementById('darkToggle');
+  let isDark = false;
+  darkToggle.addEventListener('click', () => {
+    isDark = !isDark;
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    darkToggle.innerHTML = isDark ? '<i class="fa fa-sun"></i>' : '<i class="fa fa-moon"></i>';
+  });
+
+  // Sidebar
+  function toggleSidebar(){
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('show');
+  }
+  function closeSidebar(){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('show');
+  }
+
+  // Tabs
+  function switchTab(el, id) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Save toast
+  function handleSave() {
+    const toast = document.getElementById('toast');
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    setTimeout(() => {
+      toast.style.transform = 'translateY(80px)';
+      toast.style.opacity = '0';
+    }, 2800);
+  }
+
+  // Animate progress bars on load
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.progress-fill').forEach(bar => {
+      const w = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => { bar.style.width = w; }, 400);
+    });
+  });
+</script>
+</body>
+</html>

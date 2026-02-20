@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="images/me.png">
+<meta name="theme-color" content="#1A1A1A">
+  <title>Login – Uthman Idrees Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'DM Sans',sans-serif;height:100vh;overflow:hidden;display:flex}
+    h1,h2,h3{font-family:'Syne',sans-serif}
+
+    /* LEFT PANEL */
+    .left-panel{
+      flex:0 0 50%;
+      position:relative;
+      overflow:hidden;
+    } 
+.left-panel::before {
+    content: ''; /* Required for pseudo-elements to render */
+    position: absolute;
+    inset: 0; /* Shorthand for top: 0; right: 0; bottom: 0; left: 0; */
+    background-image: url(images/me2.png);
+    background-repeat: no-repeat; /* Prevents image from repeating */
+    background-position: center; /* Centers the image */
+    background-size: cover; /* Ensures the image covers the entire area */
+    z-index: 1;
+}
+
+    .left-bg{
+      width:100%;height:100%;
+      object-fit:cover;
+      background:linear-gradient(135deg,#1a0a00,#3d1c00,#0d0d0d);
+      display:flex;align-items:center;justify-content:center;
+    }
+    /* silhouette placeholder */
+    .left-silhouette{
+      width:100%;height:100%;
+      background:linear-gradient(160deg,#111 0%,#2a1800 40%,#1a0d00 100%);
+      display:flex;align-items:flex-end;justify-content:center;
+    }
+    .silhouette-figure{
+      width:70%;max-width:340px;
+      height:85%;
+      background:linear-gradient(180deg,#5a2a00 0%,#3a1800 100%);
+      border-radius:50% 50% 0 0 / 30% 30% 0 0;
+      position:relative;
+      overflow:hidden;
+    }
+    .silhouette-figure::before{
+      content:'';
+      position:absolute;
+      top:0;left:0;right:0;bottom:0;
+      background:url('images/me2.png') center/contain no-repeat;
+      opacity:0.6;
+    }
+    .left-logo-overlay{
+      position:absolute;
+      top:50%;left:50%;
+      transform:translate(-50%,-50%);
+      z-index:2;
+      text-align:center;
+    }
+    .left-logo-overlay .logo-icon{
+      width:72px;height:72px;
+      background:transparent;
+      margin:0 auto 12px;
+    }
+    .left-brand-text{
+      font-family:'Syne',sans-serif;
+      font-size:1.3rem;font-weight:800;
+      color:#fff;letter-spacing:1px;
+    }
+    .left-tagline{
+      color:rgba(255,255,255,0.6);
+      font-size:0.8rem;margin-top:6px;
+    }
+
+    /* RIGHT PANEL */
+    .right-panel{
+      flex:1;
+      background:#fff;
+      display:flex;
+      flex-direction:column;
+      position:relative;
+      overflow-y:auto;
+    }
+    .back-link{
+      position:absolute;
+      top:24px;right:32px;
+      font-family:'Syne',sans-serif;
+      font-weight:700;
+      font-size:0.9rem;
+      color:#1a1a1a;
+      text-decoration:none;
+      transition:color 0.2s;
+    }
+    .back-link:hover{color:#FF6B00;}
+    .login-center{
+      flex:1;
+      display:flex;flex-direction:column;
+      align-items:center;justify-content:center;
+      padding:40px 10%;
+    }
+    .login-logo{
+      margin-bottom:18px;
+    }
+    .login-title{
+      font-family:'Syne',sans-serif;
+      font-size:1.6rem;font-weight:800;
+      color:#1a1a1a;
+      margin-bottom:36px;
+      text-align:center;
+    }
+    .login-form{width:100%;max-width:400px;}
+    .login-field{
+      width:100%;
+      padding:16px 20px;
+      background:#f5f5f5;
+      border:1.5px solid transparent;
+      border-radius:10px;
+      font-family:'DM Sans',sans-serif;
+      font-size:0.95rem;
+      color:#1a1a1a;
+      outline:none;
+      margin-bottom:18px;
+      transition:all 0.25s;
+    }
+    .login-field:focus{
+      border-color:#FF6B00;
+      background:#fff;
+      box-shadow:0 0 0 4px rgba(255,107,0,0.1);
+    }
+    .login-field::placeholder{color:#aaa;}
+    .btn-submit{
+      width:100%;
+      padding:16px;
+      background:#4a4a4a;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      font-family:'Syne',sans-serif;
+      font-size:1rem;font-weight:700;
+      cursor:pointer;
+      transition:all 0.3s;
+      margin-top:4px;
+    }
+    .btn-submit:hover{
+      background:#FF6B00;
+      transform:translateY(-2px);
+      box-shadow:0 8px 25px rgba(255,107,0,0.3);
+    }
+    .login-error{
+      color:#e53e3e;
+      font-size:0.82rem;
+      text-align:center;
+      margin-top:14px;
+      display:none;
+    }
+    .login-footer{
+      text-align:center;
+      padding:20px;
+      font-size:0.82rem;
+      color:#aaa;
+      font-family:'Syne',sans-serif;
+    }
+
+    /* Logo SVG */
+    .logo-u{display:inline-block;width:52px;height:52px;}
+
+    /* SHAKE animation */
+    @keyframes shake{
+      0%,100%{transform:translateX(0)}
+      20%{transform:translateX(-8px)}
+      40%{transform:translateX(8px)}
+      60%{transform:translateX(-5px)}
+      80%{transform:translateX(5px)}
+    }
+    .shake{animation:shake 0.4s ease;}
+
+    /* Mobile */
+    @media(max-width:768px){
+      body{flex-direction:column;overflow:auto;height:auto;min-height:100vh;}
+      .left-panel{flex:0 0 220px;width:100%;}
+      .right-panel{flex:1;}
+      .login-center{padding:30px 8%;}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT -->
+  <div class="left-panel">
+    <div class="left-silhouette"></div>
+    <div class="left-logo-overlay">
+      <div class="login-logo">
+         <img src="images/Group 27.png">
+      </div>
+      <div class="left-brand-text">Uthman Idrees</div>
+      <div class="left-tagline">UI/UX Designer | Product Designer | Graphic Designer</div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-panel">
+    <a href="index.html" class="back-link">back</a>
+
+    <div class="login-center">
+      <div class="login-logo">
+        <img src="images/Group 27.png">
+      </div>
+      <h2 class="login-title">Authorized Personnel</h2>
+      <div class="login-form" id="loginForm">
+        <input class="login-field" type="text" id="username" placeholder="Username" autocomplete="username"/>
+        <input class="login-field" type="password" id="accessToken" placeholder="Access Token" autocomplete="current-password"/>
+        <button class="btn-submit" onclick="handleLogin()">Submit</button>
+        <div class="login-error" id="loginError">⚠ Invalid username or access token. Try again.</div>
+      </div>
+    </div>
+
+    <div class="login-footer">Copyright 2026</div>
+  </div>
+
+<script>
+  function handleLogin() {
+    const user = document.getElementById('username').value.trim();
+    const token = document.getElementById('accessToken').value.trim();
+    const err = document.getElementById('loginError');
+    const form = document.getElementById('loginForm');
+
+    if (user === 'uthman' && token === 'uthman') {
+      err.style.display = 'none';
+      document.querySelector('.btn-submit').textContent = 'Logging in...';
+      document.querySelector('.btn-submit').style.background = '#22c55e';
+      setTimeout(() => { window.location.href = 'dashboard.html'; }, 900);
+    } else {
+      err.style.display = 'block';
+      form.classList.remove('shake');
+      void form.offsetWidth;
+      form.classList.add('shake');
+    }
+  }
+  document.addEventListener('keydown', e => { if(e.key==='Enter') handleLogin(); });
+</script>
+</body>
+</html>
